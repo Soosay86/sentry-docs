@@ -194,7 +194,7 @@
   {
     "type": "Counter",
     "name": "event.items",
-    "description": "Number of items we processed per envelope.",
+    "description": "Number of total envelope items we received.\n\nNote: This does not count raw items, it counts the logical amount of items,\ne.g. a single item container counts all its contained items.",
     "features": []
   },
   {
@@ -568,6 +568,12 @@
     "type": "Counter",
     "name": "producer.enqueue.error",
     "description": "Number of messages that failed to be enqueued in the Kafka producer's memory buffer.\n\nThese errors include, for example, _\"UnknownTopic\"_ errors when attempting to send a\nmessage a topic that does not exist.\n\nThis metric is tagged with:\n- `topic`: The Kafka topic being produced to.\n- `variant`: The Kafka message variant.",
+    "features": []
+  },
+  {
+    "type": "Counter",
+    "name": "producer.partition_key.rate_limit",
+    "description": "Number of messages that were written to the wrong partition because of configured rate limits.\n\nEach topic in Relay can optionally be configured with a per-partition-key rate limit. This\nrate limit does not drop messages, but instead disables semantic partitioning. Everytime\nthis happens for a message, this counter is incremented.",
     "features": []
   },
   {
